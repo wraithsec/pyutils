@@ -27,12 +27,14 @@ def main(args: list) -> None:
     print(delim*2)
     print(f'wget --no-check-certificate https://{args.i}:{args.p}/file -O outfile')
     print(delim*2)
-    print()
-    print()
+    print('\n','\n')
 
     # Wrap the HTTP server in an SSL context and serve
-    httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
-    httpd.serve_forever()
+    try:
+        httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
+        httpd.serve_forever()
+    except Exception as e:
+        print(f"Exceptino encountered trying to serve the wrapped server: {e}")
 
 
 if __name__ == '__main__':
